@@ -1,0 +1,81 @@
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+rm -f -r core *.ipo /scratch/user/dylan.schlichting/COAWST/Build /home/dylan.schlichting/make_macros.mk
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+cp -f /sw/eb/sw/netCDF-Fortran/4.5.3-gompic-2020b/include/netcdf.mod /scratch/user/dylan.schlichting/COAWST/Build
+cp -f /sw/eb/sw/netCDF-Fortran/4.5.3-gompic-2020b/include/typesizes.mod /scratch/user/dylan.schlichting/COAWST/Build
+cp -p /home/dylan.schlichting/make_macros.mk /scratch/user/dylan.schlichting/COAWST/Build
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+\
+cd /scratch/user/dylan.schlichting/COAWST/Build;                                                                           \
+cpp -P -DSHELFSTRAT -D'HEADER="shelfstrat.h"' -D'ROMS_HEADER="/scratch/user/dylan.schlichting/COAWST/shelfstrat.h"' -DAVERAGES -DDEBUGGING -I/scratch/user/dylan.schlichting/COAWST/ROMS/Include /scratch/user/dylan.schlichting/COAWST/Master/MCT_coupler/mod_coupler_kinds.F > mod_coupler_kinds.f90; \
+/scratch/user/dylan.schlichting/COAWST/ROMS/Bin/cpp_clean mod_coupler_kinds.f90;                                                              \
+/sw/eb/sw/OpenMPI/2.1.2-GCC-6.4.0-2.28/bin/mpif90 -c -fp-model precise -g -check all -check bounds -traceback -check uninit -gen-interfaces mod_coupler_kinds.f90;                                                  \
+cpp -P -DSHELFSTRAT -D'HEADER="shelfstrat.h"' -D'ROMS_HEADER="/scratch/user/dylan.schlichting/COAWST/shelfstrat.h"' -DAVERAGES -DDEBUGGING -I/scratch/user/dylan.schlichting/COAWST/ROMS/Include /scratch/user/dylan.schlichting/COAWST/Master/MCT_coupler/mct_coupler_params.F > mct_coupler_params.f90; \
+/scratch/user/dylan.schlichting/COAWST/ROMS/Bin/cpp_clean mct_coupler_params.f90;                                                             \
+/sw/eb/sw/OpenMPI/2.1.2-GCC-6.4.0-2.28/bin/mpif90 -c -fp-model precise -g -check all -check bounds -traceback -check uninit -gen-interfaces mct_coupler_params.f90;
+gfortran: error: precise: No such file or directory
+gfortran: error: all: No such file or directory
+gfortran: error: bounds: No such file or directory
+gfortran: error: uninit: No such file or directory
+gfortran: error: unrecognized debug output level 'en-interfaces'
+gfortran: error: unrecognized command-line option '-fp-model'; did you mean '-ftls-model='?
+gfortran: error: unrecognized command-line option '-check'; did you mean '-fcheck='?
+gfortran: error: unrecognized command-line option '-check'; did you mean '-fcheck='?
+gfortran: error: unrecognized command-line option '-traceback'
+gfortran: error: unrecognized command-line option '-check'; did you mean '-fcheck='?
+gfortran: error: precise: No such file or directory
+gfortran: error: all: No such file or directory
+gfortran: error: bounds: No such file or directory
+gfortran: error: uninit: No such file or directory
+gfortran: error: unrecognized debug output level 'en-interfaces'
+gfortran: error: unrecognized command-line option '-fp-model'; did you mean '-ftls-model='?
+gfortran: error: unrecognized command-line option '-check'; did you mean '-fcheck='?
+gfortran: error: unrecognized command-line option '-check'; did you mean '-fcheck='?
+gfortran: error: unrecognized command-line option '-traceback'
+gfortran: error: unrecognized command-line option '-check'; did you mean '-fcheck='?
+make: *** [mct_params] Error 1
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+make: Nothing to be done for `wrfclean'.
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+make: Nothing to be done for `wrf'.
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+make: Nothing to be done for `wrfhydroclean'.
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+make: Nothing to be done for `wrfhydro'.
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+make: Nothing to be done for `ww3clean'.
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+make: Nothing to be done for `ww3'.
+/bin/sh: svn: command not found
+/bin/sh: svn: command not found
+/usr/bin/cpp -P -traditional-cpp -w           -DMPI -DUSE_DEBUG -DLINUX -DX86_64 -DIFORT -D'ROOT_DIR="/scratch/user/dylan.schlichting/COAWST"' -DSHELFSTRAT -D'HEADER="shelfstrat.h"' -D'ROMS_HEADER="/scratch/user/dylan.schlichting/COAWST/shelfstrat.h"' -DAVERAGES -DDEBUGGING -DNestedGrids= -D'ANALYTICAL_DIR="/scratch/user/dylan.schlichting/COAWST/ROMS/Functionals"' -D'SVN_URL=""' -D'SVN_REV=""' -IROMS/Include -IROMS/Nonlinear -IROMS/Nonlinear/Biology -IROMS/Nonlinear/Sediment -IROMS/Nonlinear/Wec -IROMS/Nonlinear/Vegetation -IROMS/Utility -IROMS/Drivers -IROMS/Functionals -I/scratch/user/dylan.schlichting/COAWST -IMaster -ICompilers -D'HEADER_DIR="/scratch/user/dylan.schlichting/COAWST"' -DAVERAGES -DDEBUGGING ROMS/Nonlinear/main2d.F > /scratch/user/dylan.schlichting/COAWST/Build/main2d.f90
+ROMS/Bin/cpp_clean /scratch/user/dylan.schlichting/COAWST/Build/main2d.f90
+/usr/bin/cpp -P -traditional-cpp -w           -DMPI -DUSE_DEBUG -DLINUX -DX86_64 -DIFORT -D'ROOT_DIR="/scratch/user/dylan.schlichting/COAWST"' -DSHELFSTRAT -D'HEADER="shelfstrat.h"' -D'ROMS_HEADER="/scratch/user/dylan.schlichting/COAWST/shelfstrat.h"' -DAVERAGES -DDEBUGGING -DNestedGrids= -D'ANALYTICAL_DIR="/scratch/user/dylan.schlichting/COAWST/ROMS/Functionals"' -D'SVN_URL=""' -D'SVN_REV=""' -IROMS/Include -IROMS/Nonlinear -IROMS/Nonlinear/Biology -IROMS/Nonlinear/Sediment -IROMS/Nonlinear/Wec -IROMS/Nonlinear/Vegetation -IROMS/Utility -IROMS/Drivers -IROMS/Functionals -I/scratch/user/dylan.schlichting/COAWST -IMaster -ICompilers -D'HEADER_DIR="/scratch/user/dylan.schlichting/COAWST"' -DAVERAGES -DDEBUGGING ROMS/Nonlinear/bulk_flux.F > /scratch/user/dylan.schlichting/COAWST/Build/bulk_flux.f90
+ROMS/Bin/cpp_clean /scratch/user/dylan.schlichting/COAWST/Build/bulk_flux.f90
+/usr/bin/cpp -P -traditional-cpp -w           -DMPI -DUSE_DEBUG -DLINUX -DX86_64 -DIFORT -D'ROOT_DIR="/scratch/user/dylan.schlichting/COAWST"' -DSHELFSTRAT -D'HEADER="shelfstrat.h"' -D'ROMS_HEADER="/scratch/user/dylan.schlichting/COAWST/shelfstrat.h"' -DAVERAGES -DDEBUGGING -DNestedGrids= -D'ANALYTICAL_DIR="/scratch/user/dylan.schlichting/COAWST/ROMS/Functionals"' -D'SVN_URL=""' -D'SVN_REV=""' -IROMS/Include -IROMS/Nonlinear -IROMS/Nonlinear/Biology -IROMS/Nonlinear/Sediment -IROMS/Nonlinear/Wec -IROMS/Nonlinear/Vegetation -IROMS/Utility -IROMS/Drivers -IROMS/Functionals -I/scratch/user/dylan.schlichting/COAWST -IMaster -ICompilers -D'HEADER_DIR="/scratch/user/dylan.schlichting/COAWST"' -DAVERAGES -DDEBUGGING ROMS/Nonlinear/exchange_2d.F > /scratch/user/dylan.schlichting/COAWST/Build/exchange_2d.f90
+ROMS/Bin/cpp_clean /scratch/user/dylan.schlichting/COAWST/Build/exchange_2d.f90
+/usr/bin/cpp -P -traditional-cpp -w           -DMPI -DUSE_DEBUG -DLINUX -DX86_64 -DIFORT -D'ROOT_DIR="/scratch/user/dylan.schlichting/COAWST"' -DSHELFSTRAT -D'HEADER="shelfstrat.h"' -D'ROMS_HEADER="/scratch/user/dylan.schlichting/COAWST/shelfstrat.h"' -DAVERAGES -DDEBUGGING -DNestedGrids= -D'ANALYTICAL_DIR="/scratch/user/dylan.schlichting/COAWST/ROMS/Functionals"' -D'SVN_URL=""' -D'SVN_REV=""' -IROMS/Include -IROMS/Nonlinear -IROMS/Nonlinear/Biology -IROMS/Nonlinear/Sediment -IROMS/Nonlinear/Wec -IROMS/Nonlinear/Vegetation -IROMS/Utility -IROMS/Drivers -IROMS/Functionals -I/scratch/user/dylan.schlichting/COAWST -IMaster -ICompilers -D'HEADER_DIR="/scratch/user/dylan.schlichting/COAWST"' -DAVERAGES -DDEBUGGING ROMS/Modules/mod_param.F > /scratch/user/dylan.schlichting/COAWST/Build/mod_param.f90
+ROMS/Bin/cpp_clean /scratch/user/dylan.schlichting/COAWST/Build/mod_param.f90
+/usr/bin/cpp -P -traditional-cpp -w           -DMPI -DUSE_DEBUG -DLINUX -DX86_64 -DIFORT -D'ROOT_DIR="/scratch/user/dylan.schlichting/COAWST"' -DSHELFSTRAT -D'HEADER="shelfstrat.h"' -D'ROMS_HEADER="/scratch/user/dylan.schlichting/COAWST/shelfstrat.h"' -DAVERAGES -DDEBUGGING -DNestedGrids= -D'ANALYTICAL_DIR="/scratch/user/dylan.schlichting/COAWST/ROMS/Functionals"' -D'SVN_URL=""' -D'SVN_REV=""' -IROMS/Include -IROMS/Nonlinear -IROMS/Nonlinear/Biology -IROMS/Nonlinear/Sediment -IROMS/Nonlinear/Wec -IROMS/Nonlinear/Vegetation -IROMS/Utility -IROMS/Drivers -IROMS/Functionals -I/scratch/user/dylan.schlichting/COAWST -IMaster -ICompilers -D'HEADER_DIR="/scratch/user/dylan.schlichting/COAWST"' -DAVERAGES -DDEBUGGING ROMS/Modules/mod_kinds.F > /scratch/user/dylan.schlichting/COAWST/Build/mod_kinds.f90
+ROMS/Bin/cpp_clean /scratch/user/dylan.schlichting/COAWST/Build/mod_kinds.f90
+cd /scratch/user/dylan.schlichting/COAWST/Build; /sw/eb/sw/OpenMPI/2.1.2-GCC-6.4.0-2.28/bin/mpif90 -c -fp-model precise -g -check all -check bounds -traceback -check uninit -gen-interfaces mod_kinds.f90
+gfortran: error: precise: No such file or directory
+gfortran: error: all: No such file or directory
+gfortran: error: bounds: No such file or directory
+gfortran: error: uninit: No such file or directory
+gfortran: error: unrecognized debug output level 'en-interfaces'
+gfortran: error: unrecognized command-line option '-fp-model'; did you mean '-ftls-model='?
+gfortran: error: unrecognized command-line option '-check'; did you mean '-fcheck='?
+gfortran: error: unrecognized command-line option '-check'; did you mean '-fcheck='?
+gfortran: error: unrecognized command-line option '-traceback'
+gfortran: error: unrecognized command-line option '-check'; did you mean '-fcheck='?
+make: *** [/scratch/user/dylan.schlichting/COAWST/Build/mod_kinds.o] Error 1

@@ -85,7 +85,11 @@
 !  defined variable dimensions in output NetCDF files.
 !
 !       integer, parameter :: nDimID = 33
+#ifdef INWAVE_MODEL
+        integer, parameter :: nDimID = 36
+#else
         integer, parameter :: nDimID = 35
+#endif
 !
 !  Input/output grid-type variables.
 !
@@ -256,6 +260,7 @@
         integer  :: idOtyp        ! observations type
         integer  :: idOval        ! observations value
         integer  :: idOvel        ! omega vertical velocity
+        integer  :: idOvil        ! omega vertical velocity implicit
         integer  :: idOclm        ! omega vertical velocity climatology
         integer  :: idQair        ! surface air humidity
         integer  :: idPair        ! surface air pressure
@@ -1347,6 +1352,8 @@
               idWvqp=varid
             CASE ('idOvel')
               idOvel=varid
+            CASE ('idOvil')
+              idOvil=varid
             CASE ('idDano')
               idDano=varid
             CASE ('idsurT(itemp)')

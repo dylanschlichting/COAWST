@@ -178,7 +178,7 @@ endif
 ifdef USE_MPI
          CPPFLAGS += -DMPI
  ifdef USE_MPIF90
-               FC := mpif90
+               FC := mpiifort
  else
              LIBS += -lfmpi-pgi -lmpi-pgi
  endif

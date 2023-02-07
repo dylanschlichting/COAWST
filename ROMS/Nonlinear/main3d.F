@@ -360,11 +360,11 @@
 !-----------------------------------------------------------------------
             DO ig=1,GridsInLayer(nl)
               ng=GridNumber(ig,nl)
-              DO instep=1,INT(1.0_r8/WAVES(ng)%dtifac)
+!             DO instep=1,INT(1.0_r8/WAVES(ng)%dtifac)
                 DO tile=first_tile(ng),last_tile(ng),+1
                   CALL inwave_run (ng, tile)
                 END DO
-              END DO
+!             END DO
             END DO
 # endif
 
@@ -787,7 +787,7 @@
 !
             DO ig=1,GridsInLayer(nl)
               ng=GridNumber(ig,nl)
-              CALL nesting (ng, iNLM, nzwgt)
+!jcw            CALL nesting (ng, iNLM, nzwgt)
             END DO
 # endif
 !

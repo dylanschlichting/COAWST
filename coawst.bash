@@ -1,4 +1,3 @@
-#!/bin/bash
 #
 # svn $Id: build.bash 429 2009-12-20 17:30:26Z jcwarner $
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -121,7 +120,7 @@ done
 # Set the CPP option defining the particular application. This will
 # determine the name of the ".h" header file with the application
 # CPP definitions. Also this will activate the switch file for WW3.
-export   COAWST_APPLICATION=INLET_TEST
+export   COAWST_APPLICATION=SHELFSTRAT
 
 # Set the ROMS_APPLICATION to be the same as the COAWST_APP.
 # Do not change this. We use the COAWST APP for other checks.
@@ -129,7 +128,7 @@ export   ROMS_APPLICATION=${COAWST_APPLICATION}
 
 # Set a local environmental variable to define the path to the directories
 # where all this project's files are kept.
-export   MY_ROOT_DIR=/cygdrive/e/data/models/COAWST
+export   MY_ROOT_DIR=/scratch/user/dylan.schlichting/COAWST
 export   MY_PROJECT_DIR=${MY_ROOT_DIR}
 
 # The path to the user's local current ROMS source code.
@@ -144,29 +143,29 @@ export   MY_ROMS_SRC=${MY_ROOT_DIR}/
 
 ############################################################################
 # WRF : Needs to have the env variable NETCDF set.
-#export  NETCDF=${NETCDF_INCDIR}/../
+# export  NETCDF=${NETCDF_INCDIR}/../
 #
 ############################################################################
 # Wave Watch 3: Here we provide 5 environment variables for WW3.
 #
 # 1) COAWST_WW3_DIR is a pointer to root WW3 code, do not change.
-export   COAWST_WW3_DIR=${MY_ROOT_DIR}/WW3/model
+# export   COAWST_WW3_DIR=${MY_ROOT_DIR}/WW3/model
 #
 # 2) WWATCH3_NETCDF can be NC3 or NC4. We need NC4 for COAWST. do not change.
-export   WWATCH3_NETCDF=NC4
+# export   WWATCH3_NETCDF=NC4
 #
 # 3) WWATCH_ENV points to WW3 environment listing. do not change.
-export   WWATCH_ENV=${COAWST_WW3_DIR}/wwatch.env
+# export   WWATCH_ENV=${COAWST_WW3_DIR}/wwatch.env
 #
 # 4) NETCDF_CONFIG is needed by WW3. You need to set this:
-#export   NETCDF_CONFIG=${NETCDF_LIBDIR}/../bin/nc-config
+# export   NETCDF_CONFIG=${NETCDF_LIBDIR}/../bin/nc-config
 #    This may require nf-config, depending on your system.
-export   NETCDF_CONFIG=/usr/bin/nf-config
+#export   NETCDF_CONFIG=/usr/bin/nf-config
 #export   NETCDF_CONFIG=/vortexfs1/apps/impistack-1.0/bin/nf-config
 #
 # 5) WW3_SWITCH_FILE is like cpp options for WW3. You need to create it and
 #    list the name here.  You need to have COAWST listed in the switch file.
- export  WW3_SWITCH_FILE=switch_sandy
+# export  WW3_SWITCH_FILE=switch_sandy
 
 ############################################################################
 # Compiler selections.
@@ -177,7 +176,7 @@ export   NETCDF_CONFIG=/usr/bin/nf-config
 # ${MY_ROMS_SRC}/Compilers. If this is the case, the you need to keep
 # these configurations files up-to-date.
 
-#export         COMPILERS=${MY_ROMS_SRC}/Compilers
+ export         COMPILERS=${MY_ROMS_SRC}/Compilers
 
 # Set tunable CPP options.
 #
@@ -187,8 +186,8 @@ export   NETCDF_CONFIG=/usr/bin/nf-config
 # Notice also that you need to use shell's quoting syntax to enclose the
 # definition.  Both single or double quotes work. For example,
 #
-#export      MY_CPP_FLAGS="-DAVERAGES"
-#export      MY_CPP_FLAGS="${MY_CPP_FLAGS} -DDEBUGGING"
+# export      MY_CPP_FLAGS="-DAVERAGES"
+# export      MY_CPP_FLAGS="${MY_CPP_FLAGS} -DDEBUGGING"
 #
 # can be used to write time-averaged fields. Notice that you can have as
 # many definitions as you want by appending values.
@@ -205,20 +204,21 @@ export   NETCDF_CONFIG=/usr/bin/nf-config
  export        USE_MPIF90=on            # compile with mpif90 script
 #export         which_MPI=mpich         # compile with MPICH library
 #export         which_MPI=mpich2        # compile with MPICH2 library
- export         which_MPI=openmpi       # compile with OpenMPI library
+#  export         which_MPI=openmpi       # compile with OpenMPI library
+ export         which_MPI=mpiifort      # compile with intelmpi
 
-#export        USE_OpenMP=on            # shared-memory parallelism
+# export        USE_OpenMP=on            # shared-memory parallelism
 
  export              FORT=ifort
 #export              FORT=gfortran
 #export              FORT=pgi
 
- export         USE_DEBUG=              # use Fortran debugging flags
+#  export         USE_DEBUG=on              # use Fortran debugging flags
  export         USE_LARGE=on            # activate 64-bit compilation
  export       USE_NETCDF4=on            # compile with NetCDF-4 library
-#export   USE_PARALLEL_IO=on            # Parallel I/O with Netcdf-4/HDF5
+#  export   USE_PARALLEL_IO=on            # Parallel I/O with Netcdf-4/HDF5
 
-#export       USE_MY_LIBS=on            # use my library paths below
+ export       USE_MY_LIBS=on            # use my library paths below
 
 # There are several MPI libraries available. Here, we set the desired
 # "mpif90" script to use during compilation. This only works if the make
@@ -232,6 +232,10 @@ export   NETCDF_CONFIG=/usr/bin/nf-config
 # where the MPI library is installed is computer dependent. Recall
 # that you still need to use the appropriate "mpirun" to execute.
 
+# -----
+# Dylan's notes 10/2022: Since we are compiling with openmpi and 
+# ifort, we only have to specify the paths for those options. 
+# ------
 if [ -n "${USE_MPIF90:+1}" ]; then
   case "$FORT" in
     ifort )
@@ -240,7 +244,9 @@ if [ -n "${USE_MPIF90:+1}" ]; then
       elif [ "${which_MPI}" = "mpich2" ]; then
         export PATH=/opt/intelsoft/mpich2/bin:$PATH
       elif [ "${which_MPI}" = "openmpi" ]; then
-        export PATH=/opt/intelsoft/openmpi/bin:$PATH
+        export PATH=/sw/eb/sw/OpenMPI/2.1.2-GCC-6.4.0-2.28/bin:$PATH
+      elif [ "${which_MPI}" = "mpiifort" ]; then
+        export PATH=/sw/eb/sw/impi/2019.9.304-iccifort-2020.4.304/intel64/bin:$PATH
       fi
       ;;
 
@@ -305,7 +311,7 @@ if [ -n "${USE_MY_LIBS:+1}" ]; then
       export           ESMF_COMM=mpich
       export           ESMF_SITE=default
 
-      export       ARPACK_LIBDIR=/opt/intelsoft/serial/ARPACK
+      export       ARPACK_LIBDIR=/scratch/user/dylan.schlichting/COAWST/Lib/ARPACK/
       if [ -n "${USE_MPI:+1}" ]; then
         if [ "${which_MPI}" = "mpich" ]; then
           export        ESMF_DIR=/opt/intelsoft/mpich/esmf
@@ -328,22 +334,19 @@ if [ -n "${USE_MY_LIBS:+1}" ]; then
       if [ -n "${USE_NETCDF4:+1}" ]; then
         if [ -n "${USE_PARALLEL_IO:+1}" ] && [ -n "${USE_MPI:+1}" ]; then
           if [ "${which_MPI}" = "mpich" ]; then
-            export     NF_CONFIG=/opt/intelsoft/mpich/netcdf4/bin/nf-config
-            export NETCDF_INCDIR=/opt/intelsoft/mpich/netcdf4/include
+            export     NF_CONFIG=/sw/eb/sw/netCDF-Fortran/4.5.3-iimpi-2020b/bin/nf-config
+            export NETCDF_INCDIR=/sw/eb/sw/netCDF-Fortran/4.5.3-gompic-2020b/include
           elif [ "${which_MPI}" = "mpich2" ]; then
-            export     NF_CONFIG=/opt/intelsoft/mpich2/netcdf4/bin/nf-config
-            export NETCDF_INCDIR=/opt/intelsoft/mpich2/netcdf4/include
+            export     NF_CONFIG=/sw/eb/sw/netCDF-Fortran/4.5.3-iimpi-2020b/bin/nf-config
+            export NETCDF_INCDIR=/sw/eb/sw/netCDF-Fortran/4.5.3-gompic-2020b/include
           elif [ "${which_MPI}" = "openmpi" ]; then
-            export     NF_CONFIG=/opt/intelsoft/openmpi/netcdf4/bin/nf-config
-            export NETCDF_INCDIR=/opt/intelsoft/openmpi/netcdf4/include
+            export     NF_CONFIG=/sw/eb/sw/netCDF-Fortran/4.5.3-iimpi-2020b/bin/nf-config
+            export NETCDF_INCDIR=/sw/eb/sw/netCDF-Fortran/4.5.3-gompic-2020b/include
           fi
         else
-          export       NF_CONFIG=/opt/intelsoft/serial/netcdf4/bin/nf-config
-          export   NETCDF_INCDIR=/opt/intelsoft/serial/netcdf4/include
+          export       NF_CONFIG=/sw/eb/sw/netCDF-Fortran/4.5.3-iimpi-2020b/bin/nf-config
+          export   NETCDF_INCDIR=/sw/eb/sw/netCDF-Fortran/4.5.3-iimpi-2020b/include
         fi
-      else
-        export     NETCDF_INCDIR=/opt/intelsoft/serial/netcdf3/include
-        export     NETCDF_LIBDIR=/opt/intelsoft/serial/netcdf3/lib
       fi
       ;;
 
@@ -405,18 +408,18 @@ if [ -n "${USE_MY_LIBS:+1}" ]; then
       export           ESMF_COMM=mpich
       export           ESMF_SITE=default
 
-      export       ARPACK_LIBDIR=/opt/gfortransoft/serial/ARPACK
+      export       ARPACK_LIBDIR=/scratch/user/dylan.schlichting/COAWST/Lib/ARPACK/
       if [ -n "${USE_MPI:+1}" ]; then
         if [ "${which_MPI}" = "mpich2" ]; then
           export        ESMF_DIR=/opt/gfortransoft/mpich2/esmf
           export      MCT_INCDIR=/opt/gfortransoft/mpich2/mct/include
           export      MCT_LIBDIR=/opt/gfortransoft/mpich2/mct/lib
-          export  PARPACK_LIBDIR=/opt/gfortransoft/mpich2/PARPACK
+          export  PARPACK_LIBDIR=/scratch/user/dylan.schlichting/COAWST/Lib/ARPACK/
         elif [ "${which_MPI}" = "openmpi" ]; then
           export        ESMF_DIR=/opt/gfortransoft/openmpi/esmf
           export      MCT_INCDIR=/opt/gfortransoft/openmpi/mct/include
           export      MCT_LIBDIR=/opt/gfortransoft/openmpi/mct/lib
-          export  PARPACK_LIBDIR=/opt/gfortransoft/openmpi/PARPACK
+          export  PARPACK_LIBDIR=/scratch/user/dylan.schlichting/COAWST/Lib/ARPACK/
         fi
       fi
 
@@ -454,19 +457,19 @@ fi
 
 #  export     MY_HEADER_DIR=${MY_PROJECT_DIR}/ROMS/Include
 #  export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/ROMS/Functionals
-   export     MY_HEADER_DIR=${MY_PROJECT_DIR}/Projects/Inlet_test/Coupled
-   export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/Projects/Inlet_test/Coupled
+   export     MY_HEADER_DIR=${MY_PROJECT_DIR}
+   export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/ROMS/Functionals
 
 # Put the binary to execute in the following directory.
 
-# export            BINDIR=${MY_PROJECT_DIR}
-  export            BINDIR=./
+   export            BINDIR=${MY_PROJECT_DIR}
+#   export            BINDIR=./
 
 # Put the f90 files in a project specific Build directory to avoid conflict
 # with other projects.
 
-# export       SCRATCH_DIR=${MY_PROJECT_DIR}/Build
-  export       SCRATCH_DIR=./Build
+   export       SCRATCH_DIR=${MY_PROJECT_DIR}/Build
+#   export       SCRATCH_DIR=./Build
 
 # Go to the users source directory to compile. The options set above will
 # pick up the application-specific code from the appropriate place.
